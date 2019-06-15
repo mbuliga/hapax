@@ -1,0 +1,63 @@
+
+a:active, a:link, a:visited		{color: #ff0000;}
+
+
+
+.flex {
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 1px 26px;
+}
+
+.flex .box33 {
+  width: 33%;
+  margin: 10px;
+  text-align: left;
+
+}
+
+.flex .box40 {
+  width: 40%;
+  margin: 10px;
+  text-align: left;
+
+}
+
+.flex .box20 {
+  width: 20%;
+  margin: 10px;
+  text-align: left;
+
+}
+
+
+.flex .box66 {
+  width: 66%;
+  margin: 10px;
+  text-align: left;
+
+}
+
+.flex .box25 {
+  width: 25%;
+  margin: 10px;
+  text-align: left;
+
+}
+
+
+.flex .box75 {
+  width: 75%;
+  margin: 10px;
+  text-align: left;
+
+}
+
+.flex .box50 {
+  width: 50%;
+  margin: 10px;
+  text-align: left;
+
+}
+
+

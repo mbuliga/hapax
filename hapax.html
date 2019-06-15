@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>hapax</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- 
+===============================================================================
+  EXTERNAL SCRIPTS
+===============================================================================
+
+
+<script src="d3.min.js" charset="utf-8"></script>
+<script src="jquery.min.js"></script>
+
+<script src="hapax-tokens.js" charset="utf-8"></script>
+
+-->
+
+<!-- 
+===============================================================================
+  CSS
+===============================================================================
+-->
+
+<link rel="stylesheet" type="text/css" href="hapax.css">
+
+</head>
+
+<!-- 
+===============================================================================
+  BODY
+===============================================================================
+-->
+
+<body style="background-color: #232323; color: #ffffff;">
+
+<!-- 
+===============================================================================
+  INTERNAL SCRIPTS (except of main script and input script)
+===============================================================================
+-->
+
+<script src="hapax-nodes.js" charset="utf-8"></script>
+<script src="hapax-chem.js" charset="utf-8"></script>
+<script src="hapax-phys.js" charset="utf-8"></script>
+<script src="hapax-aux.js" charset="utf-8"></script>
+<script src="hapax.js" charset="utf-8"></script>
+<script src="hapax-mol.js" charset="utf-8"></script>
+
+
+
+
+
+<!-- 
+===============================================================================
+  MAIN HTML
+===============================================================================
+-->
+
+<button onclick="mockCycle()">TIME</button>
+
+
+
+
+<div class="flex">
+  <div class="box40">reactions:</div> 
+  <div class="box20">main molecule:</div>  
+  <div class="box20">time:</div> 
+  <div class="box20">no. of tokens:</div> 
+</div>
+
+
+<div class="flex">
+  <div class="box40" id="molabs"> </div> 
+  <div class="box20" id="molorig"> </div>
+  <div class="box20"  id="molrelback"></div>    
+  <div class="box20" id="seekind"></div>    
+</div>
+
+
+
+<!-- 
+===============================================================================
+  MAIN SCRIPT
+===============================================================================
+-->
+
+<script src="hapax-play.js" charset="utf-8"></script> 
+
+<!-- 
+===============================================================================
+  FOOTER
+===============================================================================
+-->
+
+<br>
+
+<footer>
+
+<p style="padding: 1px 26px;" >
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
+><img alt="Creative Commons License" style="border-width:2" src="cc-by-4-0.png"/></a>
+ &nbsp; M. Buliga, version: 15.06.2019 <br> 
+</p>
+
+</footer>
+
+
+</body>
+</html>
