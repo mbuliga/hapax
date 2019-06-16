@@ -14,6 +14,49 @@ var leftPatternsList = LeftPatternsList(chem);
 var whichTokenKinds = tokensList(chem);
 var combCycleList = combList(chem);
 
+var k, j, a, aa, leftPatternsListWithState = [], whichTokenKindsWithState = [], combCycleListWithState = [];
+for (k=0; k < leftPatternsList.length; k++) {
+a = copyPattern(leftPatternsList[k].kind);
+aa = molRelToState(a.mol);
+if (aa.nodelength > a.mol.length) {
+  for (j=a.mol.length; j < aa.nodelength; j++) {
+    if (aa.node[j].type == "FRIN") {
+      aa.node[j].type = "IN";
+    } else {
+      aa.node[j].type = "OUT";
+    }
+  }
+}
+leftPatternsListWithState.push({named:a.named, edge:a.edge, mol:a.mol, state:aa});
+}
+for (k=0; k < whichTokenKinds.length; k++) {
+a = copyPattern(whichTokenKinds[k].kind);
+aa = molRelToState(a.mol);
+if (aa.nodelength > a.mol.length) {
+  for (j=a.mol.length; j < aa.nodelength; j++) {
+    if (aa.node[j].type == "FRIN") {
+      aa.node[j].type = "IN";
+    } else {
+      aa.node[j].type = "OUT";
+    }
+  }
+}
+whichTokenKindsWithState.push({named:a.named, edge:a.edge, mol:a.mol, state:aa});
+}
+for (k=0; k < combCycleList.length; k++) {
+a = copyPattern(combCycleList[k].kind);
+aa = molRelToState(a.mol);
+if (aa.nodelength > a.mol.length) {
+  for (j=a.mol.length; j < aa.nodelength; j++) {
+    if (aa.node[j].type == "FRIN") {
+      aa.node[j].type = "IN";
+    } else {
+      aa.node[j].type = "OUT";
+    }
+  }
+}
+combCycleListWithState.push({named:a.named, edge:a.edge, mol:a.mol, state:aa});
+}
 
 /* 
 ===============================================================================
@@ -23,7 +66,7 @@ var combCycleList = combList(chem);
 
 // you can change Physics  to "none"
 
-var Physics = "random";
+var PHYSICS = "random";
 
 // the dimension of the universe is 
 
@@ -35,16 +78,20 @@ var BOXSIZE = 1000;
 
 // the components of the speed are at most
 
-var BOXSPEED = 50;
+var BOXSPEED = 10;
 
 
 // near parameter 
 
-var NEARPARAM = 0.5;
+var NEARPARAM = 0.7;
 
 // Young constant
 
-var ELASTICA = 0.1;
+var ELASTICA = 0.01;
+
+// max number of explored edges/cycle
+
+var MAXEDGE = 50;
 
 
 /* 
@@ -55,7 +102,7 @@ var ELASTICA = 0.1;
 
 // var mol = molfile();
 
-var molnamed = new Mol("9quine");
+var molnamed = new Mol("9_quine");
 var mol = molnamed.mol;
 
 /* a .mol is an usual mol file, i.e. an array of nodes, each 
@@ -78,7 +125,7 @@ var mol = molnamed.mol;
    are available:
 
    ackermann_2_2  (i.e. the ackermann(2,2) used so many times in chemlambda)
-   9quine        (the smallest chemlambda quine. not from a lambda term, dies 
+   9_quine        (the smallest chemlambda quine. not from a lambda term, dies 
                   fast in random conditions)
 
    (As any mol file which represents a connected graph can 
@@ -257,6 +304,11 @@ listoftokenkinds.push({kind:whichTokenKinds[k].kind, number:1});
 /* go in time the first step (or, later, one more step) */
 
 
+
+
+
+
+
 mockCycle();
 
 
@@ -264,6 +316,9 @@ mockCycle();
 
 
 function mockCycle() {
+
+var phyStateOldNodelength = phyState.nodelength;
+var phyStateOldEdgelength = phyState.edgelength;
 
 // if tokens are needed, add them!
 
@@ -290,24 +345,26 @@ if (listoftokenkinds[k].number == 0) {
 
 /* 
 ===============================================================================
- initialize and update the physics state
+ update the physics state
 ===============================================================================
 */
 
-    phyState = new State([], [], state.nodelength, state.edgelength);
+
 
     var u;
-    for (u=0; u < state.nodelength; u++) {
+    for (u=phyStateOldNodelength; u < state.nodelength; u++) {
       phyState.node.push({q:randomVector(DIMENSION,BOXSIZE), p:zeroVector(DIMENSION)});
     }
     
-    for (u=0; u < state.edgelength; u++) {
+    for (u=phyStateOldEdgelength; u < state.edgelength; u++) {
       phyState.edge.push({q:zeroVector(DIMENSION)});
     }
 
+
+
 // update the physics state
 
-physics("none", phyState);
+physics(PHYSICS, phyState);
 
 
 /* 
@@ -423,26 +480,68 @@ for (k = 0; k < molabsReal.mol.length; k++) {
 }
 
 var molabsWithoutTokens = [];
+var molabsMeans = [];
 
+// SEMANTICS
+
+var startOfMeaning;
 for (k = 0; k < molabsReal.mol.length; k++) {
   if (spliceIt[k]) {
-  molabsWithoutTokens.push(molabsReal.mol[k]);
+    molabsWithoutTokens.push(molabsReal.mol[k]);
+    startOfMeaning = "";
+    switch (molabsReal.mol[k][0]) {
+      case "A":
+      startOfMeaning += "(" + molabsReal.mol[k][3] + ") = (" + molabsReal.mol[k][1] + ") (" + molabsReal.mol[k][2] + ")";
+      break;
+      
+      case "L":
+      startOfMeaning += "(" + molabsReal.mol[k][3] + ") = &lambda; (" + molabsReal.mol[k][2] + ") . (" + molabsReal.mol[k][1] + ")";
+      break;
+
+      case "Arrow":
+      startOfMeaning += "(" + molabsReal.mol[k][2] + ") = (" + molabsReal.mol[k][1] + ")";
+      break;
+      
+      case "FO":
+      startOfMeaning += "(" + molabsReal.mol[k][2] + ") = (" + molabsReal.mol[k][1] + ") , (" + molabsReal.mol[k][3] + ") = (" +  molabsReal.mol[k][1] + ")";
+      break;
+      
+      case "FOE":
+      startOfMeaning += "(" + molabsReal.mol[k][2] + ") = CDR (" + molabsReal.mol[k][2] + ") , (" + molabsReal.mol[k][3] + ") = CAR (" +  molabsReal.mol[k][1] + ")";
+      break;
+      
+      case "FI":
+      startOfMeaning += "(" + molabsReal.mol[k][3] + ") = (CONS (" + molabsReal.mol[k][1] + ")  (" + molabsReal.mol[k][2] +  "))";
+      break;
+
+      case "FRIN":
+      startOfMeaning += "input (" + molabsReal.mol[k][1] + ")";
+      break;
+
+      case "FROUT":
+      startOfMeaning += "output (" + molabsReal.mol[k][1] + ")";
+      break;
+    }
+    molabsMeans.push(startOfMeaning);  
   }
 }
 
 printarray (molabsWithoutTokens, "molorig");
-printarray (molabsReal.mol, "molrelback");
+printarray (molabsMeans, "molrelback");
 
 var text = "<ul>";
 
 for (k = 0; k < listoftokenkinds.length; k++) {
   text += "<li>" + "[" + listoftokenkinds[k].kind + "] "+ listoftokenkinds[k].number + "</li>";
 }
-
-text += "</ul> <ul><li> cost of computation: " + state.nodelength + "</li>";
-text += "<li> main molecule nodes: " + molabsWithoutTokens.length + "</li></ul>";
-
+text += "</ul>";
+text += "<ul><li> cost of computation: " + state.nodelength + "</li>";
+text += "<li> main molecule nodes: " + molabsWithoutTokens.length + "</li>";
+text += "<li> time: " + timeTrack + "</li></ul>";
 document.getElementById("seekind").innerHTML = text;
+
+
+//document.getElementById("molrelback").innerHTML = text;
 
 
 /*create the seepattern Same structure as the seetoken, but this time for reaction patterns.
@@ -615,21 +714,13 @@ text += "</ul>";
 
 document.getElementById("molabs").innerHTML = text;
 
-var molabs = stateToMolAbs(state);
-
-// printarray(molabs.mol,"molrelback");
-
-
-// document.getElementById("molrelback").innerHTML = timeTrack;
-
-// console.log(timeTrack);
 
 timeTrack++;
 
 
-
 // end of mockCycle()
 }
+
 
 
 

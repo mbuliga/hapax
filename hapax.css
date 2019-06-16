@@ -1,7 +1,11 @@
 
 a:active, a:link, a:visited		{color: #ff0000;}
 
-
+#container {
+  position: relative;
+  background-color: #232323; 
+  color: #ffffff;
+}
 
 .flex {
   display: flex;
@@ -11,6 +15,13 @@ a:active, a:link, a:visited		{color: #ff0000;}
 
 .flex .box33 {
   width: 33%;
+  margin: 10px;
+  text-align: left;
+
+}
+
+.flex .box30 {
+  width: 30%;
   margin: 10px;
   text-align: left;
 
@@ -59,5 +70,6 @@ a:active, a:link, a:visited		{color: #ff0000;}
   text-align: left;
 
 }
+
 
 

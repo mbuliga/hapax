@@ -721,7 +721,7 @@ return output;
 
 /* 
 ===============================================================================
- given a pattern pat, an edge and a state, gives a match
+ given a pattern with state pat, an edge and a state, gives a match
 ===============================================================================
 */
 
@@ -749,14 +749,15 @@ function  explore(pat, edge, state, freeNode) {
 var edgeRel = pat.edge;
 var molRel = pat.mol;
 var named = pat.named;
+var stateRel = pat.state;
 
 
 if (molRel.length > 0) {
 
-var k, l, m, edgeRelAbs, stateRel;
+var k, l, m, edgeRelAbs;
 var bui;
 
-stateRel = molRelToState(molRel);
+//stateRel = molRelToState(molRel);
 
 var success = 1;
 
@@ -795,7 +796,7 @@ for (k=0; k < stateRel.edgelength; k++) {
 
 
 /* transform the added FRIN and FROUT into IN and OUT, 
-*/
+
 
 
 if (stateRel.nodelength > molRel.length) {
@@ -807,7 +808,7 @@ if (stateRel.nodelength > molRel.length) {
     }
   }
 }
-
+*/
 
 
 
@@ -994,22 +995,22 @@ var k, output;
 switch (what) {
 
   case "pattern":
-  var tokind = LeftPatternsList(chem);
+  var tokind = leftPatternsListWithState;
   break;
 
   case "token":
-  var tokind = tokensList(chem);
+  var tokind = whichTokenKindsWithState;
   break;
 
   case "comb":
-  var tokind = combList(chem);
+  var tokind = combCycleListWithState;
   break;
 }
 
 
 
 for (k=0; k < tokind.length; k++) {
-  output = explore(copyPattern(tokind[k].kind), edg, state, freeNode);
+  output = explore(tokind[k], edg, state, freeNode);
  if (output.id) { break; }
 }
 
@@ -1017,47 +1018,6 @@ return output;
 
 }
 
-
-/* 
- token related functions
-*/
-
-
-/* 
-===============================================================================
- TokenSoup creation
-===============================================================================
-*/
-
-/* if you add a new token name here, then add the pattern  to hapax-mol.js too!
-*/
-
-
-function addTokenSoup(array, num, b) {
-var k, i, j, h, c, e, ee, newTok, obj, output = [];
-
-c = b;
-
-
-
-for (k=0; k < array.length; k++) {
-  ee = copyPattern(array[k].kind);
-  for (j=0; j < num; j++) {
-    c++;
-    e = clone(ee);
-    newTok = new Token(e, c);
-    for (i=0; i < newTok.pattern.mol.length; i++) {
-      for (h=1; h < newTok.pattern.mol[i].length; h++) {
-        (newTok.pattern.mol[i])[h] =  (ee.mol[i])[h] + "^" + c ;
-      }
-    }
-    output.push(newTok);
-  }
-}
-
-obj = {soup:output, ident:c};
-return obj;
-}
 
 
 
@@ -1081,6 +1041,7 @@ if (what == "comb") {a = "pattern";}
 for (k=0; k < state.edgelength; k++) {
 seed.push({named:"inert", id:0, mol:[], sources:[], targets:[], iso:{nodes:[], edges:[], tag:[]}});
 }
+
 
 
 for (k=0; k < seed.length; k++) {
@@ -1129,7 +1090,7 @@ for (k = 0; k < permT.length; k++) {
   freeToken.push(1);  
 }
 
-  var tokind = LeftPatternsList(chem);
+  var tokind = leftPatternsList;
 
 for (k = 0; k < permP.length; k++) {
   actEdge = permP[k].o;
@@ -1169,6 +1130,48 @@ return reaction;
 
 }
 
+
+
+/* 
+ token related functions
+*/
+
+
+/* 
+===============================================================================
+ TokenSoup creation
+===============================================================================
+*/
+
+/* if you add a new token name here, then add the pattern  to hapax-mol.js too!
+*/
+
+
+function addTokenSoup(array, num, b) {
+var k, i, j, h, c, e, ee, newTok, obj, output = [];
+
+c = b;
+
+
+
+for (k=0; k < array.length; k++) {
+  ee = copyPattern(array[k].kind);
+  for (j=0; j < num; j++) {
+    c++;
+    e = clone(ee);
+    newTok = new Token(e, c);
+    for (i=0; i < newTok.pattern.mol.length; i++) {
+      for (h=1; h < newTok.pattern.mol[i].length; h++) {
+        (newTok.pattern.mol[i])[h] =  (ee.mol[i])[h] + "^" + c ;
+      }
+    }
+    output.push(newTok);
+  }
+}
+
+obj = {soup:output, ident:c};
+return obj;
+}
 
 
 

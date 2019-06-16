@@ -46,7 +46,7 @@ mol:[["A", "1", "cb", "o"],
 },
 
 // source https://github.com/chorasimilarity/chemlambda-gui/blob/gh-pages/dynamic/mol/9_quine.mol 
-{named:"9quine",
+{named:"9_quine",
 edge:"1",
 mol:[["FOE", "1", "11", "10"], 
     ["FOE", "9", "17", "16"],

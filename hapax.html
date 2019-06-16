@@ -35,7 +35,7 @@
 ===============================================================================
 -->
 
-<body style="background-color: #232323; color: #ffffff;">
+<body style="background-color: #232323; color: #ffffff; overflow: scroll;">
 
 <!-- 
 ===============================================================================
@@ -60,27 +60,38 @@
 ===============================================================================
 -->
 
-<button onclick="mockCycle()">TIME</button>
+<p style="position: absolute; top: 0; right: 0; border: 0;">
+ <a href="http://imar.ro/~mbuliga/" target="_blank">M. Buliga</a>, version: 15.06.2019 &nbsp; <a  rel="license" href="http://creativecommons.org/licenses/by/4.0/"
+><img alt="Creative Commons License" style="border-width:2" src="cc-by-4-0.png"/></a><br> 
+</p>
+
+<p><a href="https://github.com/chorasimilarity/chemlambda-gui/blob/gh-pages/dynamic/mol/9_quine.mol" target="_blank">9quine</a> computed with <a href="https://github.com/mbuliga/hapax" target="_blank">(hapax)</a>. See also the computation of <a href="http://imar.ro/~mbuliga/hapax.html" target="_blank">Ackermann(2,2)</a></p>
+
+<p>
+<button id="start">start</button> 
+<button id="stop">stop</button> &nbsp; &nbsp;
+
+<button id="my2nd" onclick="document.location.reload(true)">refresh</button>
 
 
-
+<div id="container">
 
 <div class="flex">
-  <div class="box40">reactions:</div> 
-  <div class="box20">main molecule:</div>  
-  <div class="box20">time:</div> 
-  <div class="box20">no. of tokens:</div> 
+  <div class="box30"><ul><li>reactions ingredients:</li></ul></div> 
+  <div class="box20"><ul><li>main molecule:</li></ul></div>  
+  <div class="box30"><ul><li>means:</li></ul></div> 
+  <div class="box20"><ul><li>tokens:</li></ul></div> 
 </div>
 
 
 <div class="flex">
-  <div class="box40" id="molabs"> </div> 
+  <div class="box30" id="molabs"> </div> 
   <div class="box20" id="molorig"> </div>
-  <div class="box20"  id="molrelback"></div>    
+  <div class="box30"  id="molrelback"></div>    
   <div class="box20" id="seekind"></div>    
 </div>
 
-
+</div>
 
 <!-- 
 ===============================================================================
@@ -90,24 +101,62 @@
 
 <script src="hapax-play.js" charset="utf-8"></script> 
 
+<!-- document.getElementById("myBtn").disabled = true;
+-->
+<script>
+function myMove() {
+
+  var elem = document.getElementById("container");   
+  mockCycle();
+}
+var requestId;
+
+function loop() {
+    requestId = undefined;
+    
+  var elem = document.getElementById("container");   
+  mockCycle();
+  start();
+}
+
+function start() {
+    if (!requestId) {
+       requestId = window.requestAnimationFrame(loop);
+    }
+}
+
+function stop() {
+    if (requestId) {
+       window.cancelAnimationFrame(requestId);
+       requestId = undefined;
+    }
+}
+document.querySelector("#start").addEventListener('click', function() {
+  start();
+});
+
+document.querySelector("#stop").addEventListener('click', function() {
+  stop();
+});
+</script>
+
+
 <!-- 
 ===============================================================================
   FOOTER
 ===============================================================================
--->
+
 
 <br>
 
 <footer>
 
-<p style="padding: 1px 26px;" >
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
-><img alt="Creative Commons License" style="border-width:2" src="cc-by-4-0.png"/></a>
- &nbsp; M. Buliga, version: 15.06.2019 <br> 
-</p>
+
 
 </footer>
 
+-->
 
 </body>
 </html>
+

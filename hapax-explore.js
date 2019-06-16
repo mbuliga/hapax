@@ -10,8 +10,52 @@ var chem = "chemlambda";
 
 
 var leftPatternsList = LeftPatternsList(chem);
+var whichTokenKinds = tokensList(chem);
+var combCycleList = combList(chem);
 
-
+var k, j, a, aa, leftPatternsListWithState = [], whichTokenKindsWithState = [], combCycleListWithState = [];
+for (k=0; k < leftPatternsList.length; k++) {
+a = copyPattern(leftPatternsList[k].kind);
+aa = molRelToState(a.mol);
+if (aa.nodelength > a.mol.length) {
+  for (j=a.mol.length; j < aa.nodelength; j++) {
+    if (aa.node[j].type == "FRIN") {
+      aa.node[j].type = "IN";
+    } else {
+      aa.node[j].type = "OUT";
+    }
+  }
+}
+leftPatternsListWithState.push({named:a.named, edge:a.edge, mol:a.mol, state:aa});
+}
+for (k=0; k < whichTokenKinds.length; k++) {
+a = copyPattern(whichTokenKinds[k].kind);
+aa = molRelToState(a.mol);
+if (aa.nodelength > a.mol.length) {
+  for (j=a.mol.length; j < aa.nodelength; j++) {
+    if (aa.node[j].type == "FRIN") {
+      aa.node[j].type = "IN";
+    } else {
+      aa.node[j].type = "OUT";
+    }
+  }
+}
+whichTokenKindsWithState.push({named:a.named, edge:a.edge, mol:a.mol, state:aa});
+}
+for (k=0; k < combCycleList.length; k++) {
+a = copyPattern(combCycleList[k].kind);
+aa = molRelToState(a.mol);
+if (aa.nodelength > a.mol.length) {
+  for (j=a.mol.length; j < aa.nodelength; j++) {
+    if (aa.node[j].type == "FRIN") {
+      aa.node[j].type = "IN";
+    } else {
+      aa.node[j].type = "OUT";
+    }
+  }
+}
+combCycleListWithState.push({named:a.named, edge:a.edge, mol:a.mol, state:aa});
+}
 // the dimension of the universe is 
 
 var DIMENSION = 2;
