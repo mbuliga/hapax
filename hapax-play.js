@@ -74,7 +74,7 @@ var DIMENSION = 2;
 
 // the universe is a cube with rigid walls,  with size
 
-var BOXSIZE = 1000;
+var BOXSIZE = 10;
 
 // the components of the speed are at most
 
@@ -83,15 +83,12 @@ var BOXSPEED = 10;
 
 // near parameter 
 
-var NEARPARAM = 0.7;
+var NEARPARAM = 0.8;
 
 // Young constant
 
 var ELASTICA = 0.01;
 
-// max number of explored edges/cycle
-
-var MAXEDGE = 50;
 
 
 /* 
@@ -157,7 +154,7 @@ var mol = molnamed.mol;
 var initialTokenIdent = 0;
 
 /* how many tokens of each kind do you wish? */
-var tokenQuantity = 1;
+var tokenQuantity = 3;
 
 /* the list of tokens kinds for a chemistry */
 
@@ -325,10 +322,10 @@ var phyStateOldEdgelength = phyState.edgelength;
 
 
 for (k = 0; k < whichTokenKinds.length; k++) {
-if (listoftokenkinds[k].number == 0) {
+if (listoftokenkinds[k].number < tokenQuantity) {
   var currentTokenIdent = tokenSoup.ident;
   var addSomeMoreTokens =   [{kind:listoftokenkinds[k].kind}];
-  var addSomeMoreTokensNumber = 1;
+  var addSomeMoreTokensNumber = tokenQuantity - listoftokenkinds[k].number;
   var addSomeSoup = addTokenSoup(addSomeMoreTokens, addSomeMoreTokensNumber, currentTokenIdent);
   tokenSoup.soup = tokenSoup.soup.concat(addSomeSoup.soup);
   tokenSoup.ident = addSomeSoup.ident;
@@ -408,8 +405,8 @@ var orderT = idPermState(state.edgelength);
 /* random shuffling gives permutations used for the order
    of search for patterns and tokens */
 
-orderP = shuffle(orderP);
-orderT = shuffle(orderT);
+shuffleS(orderP);
+shuffleS(orderT);
 
 
 
@@ -602,8 +599,8 @@ var permT = idPermState(edgeT.length);
 
 /* random shuffling of the main edges */
 
-permP = shuffle(permP);
-permT = shuffle(permT);
+shuffleS(permP);
+shuffleS(permT);
 
 
 for (k=0; k < permP.length; k++) {
