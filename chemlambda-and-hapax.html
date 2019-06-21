@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>chemlambda and hapax</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- 
+===============================================================================
+  CSS
+===============================================================================
+-->
+
+<link rel="stylesheet" type="text/css" href="hapax.css">
+
+</head>
+
+<!-- 
+===============================================================================
+  BODY
+===============================================================================
+-->
+
+<body style="background-color: #232323; color: #ffffff; overflow: scroll;">
+<p style="position: absolute; top: 0; right: 0; border: 0;">
+ <a href="http://imar.ro/~mbuliga/" target="_blank">M. Buliga</a>, version: 21.06.2019 &nbsp; <a  rel="license" href="http://creativecommons.org/licenses/by/4.0/"
+><img alt="Creative Commons License" style="border-width:2" src="cc-by-4-0.png"/></a><br> 
+</p>
+
+<h1 style="padding: 14px 26px;"> chemlambda and hapax </h1>
+
+
+This page explains the following: <br>
+
+<ul style="padding: 14px 26px;">
+<li> The mol notation for graphs in chemlambda, hapax, interaction combinators and other small graph rewrite systems</li>
+<li> How are understood the rewrites in <a href="https://github.com/chorasimilarity/chemlambda-gui/blob/gh-pages/dynamic/README.md" target="_blank">chemlambda</a> [1], [2], or <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.57.5761&rep=rep1&type=pdf" target="_blank">interaction combinators</a> [3] versus how are understood the rewrites in <a href="https://github.com/mbuliga/hapax" target="_blank">hapax</a> [4] (and other <a href="http://imar.ro/~mbuliga/graph-rewrites.html" target="_blank">small graph rewrite systems</a> [5]) </li>
+</ul>
+
+<br>
+
+<h2 style="padding: 14px 26px;"> The mol notation </h2>
+
+Is a very compact notation for the kind of graphs used in all these graph-rewriting formalisms. In order to understand the notation, we need first to define these graphs. <br>
+
+
+<h3 style="padding: 14px 26px;"> Graphs </h3>
+
+The most usual way to define a graph is the following: <br>
+
+<ul style="padding: 14px 26px;">
+<li> we have a set "N" of nodes (non empty)</li>
+<li> and a set "E" of edges. </li>
+<li> to any edge "e" from "E" we associate two nodes, say "a" and "b". These nodes are the extremities of the edge.</li> 
+</ul>
+
+The valence of a node is the number of times the node appears at an extremity of an edge. There is no particular order of the edges which have this node at one of the extremities. We think that the node connects with an edge via a node port. So, in this definition there is no particular order of the node ports of a node.<br>
+<br>
+ Also, remark that in this definition the extremities of an edge are given in no particular order. We say this is a graph with un-oriented or undirected edges. <br>
+
+
+<br>
+
+These graphs don't have enough structure for our needs. That is why we shall add some structure: <br>
+
+<ul style="padding: 14px 26px;">
+<li> we ask that each node of the graph has a type. We first define a family of node types, think about a node type like a prototype of a node. <br> <br>
+In chemlambda the node type is defined by one of the names "A", "L", "FI", "FO", "FOE", "Arrow", "FRIN", "FROUT", "T". <br><br>
+In interaction combinators the node type is "&gamma;", "&delta;", "&epsilon;". <br><br></li>
+<li> Each node type defines the valence of a node (i.e. the number of ports) and an order of the ports of the node. Therefore, compared to the general case of a graph, we do have now a particular order of the ports of a node</li>
+</ul>
+
+<h3 style="padding: 14px 26px;"> The mol notation of a graph</h3>
+
+The mol notation for such a graph is a list of nodes of the graph, where for each node we have a line (item) of the list. Each line represents a node, in the following format:  ( "LS" means line separator and "FS" means "field separator")<br>
+<br>
+
+[type of node] FS [list of ports] <br>
+
+<br>
+
+The [type of node] is, in chemlambda "A", "L", "FI", "FO", "FOE", "Arrow", "FRIN", "FROUT", "T", in interaction combinators is "&gamma;", "&delta;", "&epsilon;". <br><br>
+
+The [list of ports] is an array (a list) with FS as field separator, where the element "i" of the list is the name of the edge connected at the edge port "i". <br>
+<br><br>
+
+Let's revisit the definitions we have until now, by adding to them a bit of details, in order to pass from the mathematical notation to a notation we can use with computers. <br><br>
+
+A graph is: 
+
+<ul style="padding: 14px 26px;">
+<li> a finite set of nodes, enumerated by numbering them in an arbitrary order, from 1 to Nodes_number </li>
+<li> a finite set of edges tags (i.e. names). It is understood that each edge is referred by it's tag, so any two different edges have different tags.</li>
+<li> each node has a node type and connects to the edges via node ports.</li> 
+</ul>
+
+The mol notation for such a graph is an array of node lines, where each line is in the mol format.<br><br>
+
+For example, in chemlambda we use the LS as "newline" and FS as " " and the mol notation <br>
+
+<br>
+A a b c <br>
+L c b a <br>
+<br>
+describes a graph which has 2 nodes and 3 edges. In JSON notation we would write: <br>
+<br>
+graphMol = [["A", "a", "b", "c"], <br>
+["L", "c", "b", "a"]<br>
+] <br>
+<br>
+In javascript we could define this as <br>
+<br>
+graphMol = [{type:"A", ports:["a", "b", "c"]}, <br>
+{type:"L", ports:["c", "b", "a"]} <br>
+] <br>
+<br>
+This describes a graph with 2 nodes and 3 edges, where: <br>
+<ul style="padding: 14px 26px;">
+<li>node 1 is of type "A". The port 1 is connected to the edge "a", port 2 is connected to the edge "b", port "3" is connected to the edge "c" </li>
+<li>node 2 is of type "L". The port 1 is connected to the edge "c", port 2 is connected to the edge "b", port "3" is connected to the edge "a" </li>
+</ul>
+In the class of graphs that we use, this graph is different from the graph with the mol notation <br>
+<br>
+A b a c <br>
+L c b a <br>
+<br>
+because even if this second graph has also 2 nodes, of types "A" and "L", also 3 edges, named "a", "b", "c", there is a difference between the way edges are connected to ports. While for the first graph: <br>
+<ul style="padding: 14px 26px;">
+<li>edge "a" has the extremities: node 1, connected at port 1, and node 2, connected at port 3</li>
+<li>edge "b" has the extremities: node 1, connected at port 2, and node 2, connected at port 2</li>
+<li>edge "c" has the extremities: node 1, connected at port 3, and node 2, connected at port 1</li>
+</ul>
+for the second graph we have:<br>
+<ul style="padding: 14px 26px;">
+<li>edge "a" has the extremities: node 1, connected at port 2, and node 2, connected at port 3</li>
+<li>edge "b" has the extremities: node 1, connected at port 1, and node 2, connected at port 2</li>
+<li>edge "c" has the extremities: node 1, connected at port 3, and node 2, connected at port 1</li>
+</ul>
+therefore even if we rename the edges and even if we renumber the nodes, we can't transform a graph into the other. <br>
+
+<br>
+
+Similarly, in interaction combinators the following mol notation <br>
+<br>
+&delta; b a c <br>
+&delta; a b c <br>
+<br>
+describes a graph with 2 nodes and 3 edges, etc. <br>
+
+<br>
+
+
+As you see, the mol notation of such a graph does introduce a supplimentary structure, namely the ordering of the nodes of the graph. For the purposes of graph rewriting, this ordering is irrelevant. Otherwise we would not have a graph-rewriting formalism, we would have a term-rewriting formalism. <br>
+
+
+<h3 style="padding: 14px 26px;"> The mol notation abstractly</h3>
+
+If we start from the mol notation of a graph, how can we know that there is a graph which has this as a mol notation? <br>
+
+<br>
+
+There are two conditions: <br>
+<ul style="padding: 14px 26px;">
+<li> the [list of ports] should have length compatible with the [type of node]</li>
+<li>each edge name should appear exactly twice in the mol notation. Because each edge has two extremities.</li>
+</ul>
+
+<br>
+
+However, we may work with mol files, which are mol notations for graph which may have free edges. In a mol file an edge name appears at most twice. Why? because this way a sub-array of a mol notation array is a mol file. This is important because when we shall discuss about graph rewrites, we shall need to define patterns, which are sets of nodes in a graph with certain properties. We shall denote patterns as mol files. <br><br>
+
+Also, we shall accept graphs which have some edge extremities "free", that is dangling without being connected to a node port. The mol notation for such a graph has the property that each edge name appears at most twice. All in all a mol file describes the graphs we need, as well as their subgraphs.<br><br>
+
+
+<h3 style="padding: 14px 26px;"> Oriented graphs, the first difference between chemlambda and interaction combinators</h3>
+
+In chemlambda (and generally in hapax) we use graphs as previously, along with a supplimentary structure: the edges are oriented, that is <br>
+
+<ul style="padding: 14px 26px;">
+<li>each edge has a source [node port] and a target [node port]</li>
+<li> which implies that each node port has a type itself:
+  <ul>
+  <li> "in" if the node port is a target of an edge</li>
+  <li> "out" if the node port is a source of an edge</li>
+  </ul>
+</ul>
+
+The "in" and "out" are with respect to the node: a target of an edge is an "in" of a node... <br> <br>
+
+This supplimentary structure, which is not present in usual interaction combinators, forces us to modify the type of a node, namely, a node type specifies, as previously, the name of the type ("A", "L", "FI", etc.), the number of ports, but also the type "in" or "out" of each port. <br><br>
+
+For example, the nodes of type "A" and "FI" have 3 ports,  with the types ["in", "in", "out"]. The nodes "L", "FO", FOE" have 3 ports, with the types ["in", "out", "out"]. In the hapax repository this is specified in the <a href="https://github.com/mbuliga/hapax/blob/master/hapax-nodes.js" target="_blank">hapax-nodes.js</a>. <br> <br>
+
+In general, in hapax we shall strive to impose for 3-valent node types, the following: always the 1st port has type "in" and the 3rd port has type "out", while the middle port has either "in" or "out" type. <br><br>
+
+The second modification we have, due to the oriented edges, is that an admissible mol file for a graph with oriented edges has the supplimentary property:<br>
+<ul style="padding: 14px 26px;">
+<li> each edge name appears at most twice, and if it appears twice then it appears once in a node port of type "in" and once in a node port of type "out"</li>
+</ul>
+
+That is why, for example, the list <br>
+<br>
+&delta; b a c <br>
+&gamma; a b c <br>
+<br>
+is a valid mol file of an interaction combinator graph, but the list <br>
+<br>
+A b a c <br>
+L a b c <br>
+<br>
+is not a valid mol file for chemlambda, because the edge "c" appears twice in a port of type "out" and the edge "a" appears twice in a port of type "in". <br> <br>
+
+In chemlambda (in general in hapax) there is an unique way to add nodes to an oriented graph which has some edges with free extremities. We simply define two new node types: <br>
+<ul style="padding: 14px 26px;">
+<li>"FRIN" (i.e. "free in") which has only 1 port, of type "out" </li>
+<li>"FROUT" (i.e. "free out") which has only 1 port, of type "in"</li>
+</ul>
+
+Then, if in a mol file the edge "e" appears only once, in a node port of type "in", it means that the edge has a free source, therefore we add a node <br>
+<br>
+FRIN e <br>
+<br>
+which becomes the source of the edge "e". <br><br>
+
+In the same way,  if the edge "e" appears only once, in a node port of type "out", it means that the edge has a free target, therefore we add a node <br>
+<br>
+FROUT e <br>
+<br>
+which becomes the target of the edge "e". <br><br>
+
+(We could do the same in the un-oriented case, by using only one new node type, say "FREE" with only one port.) <br><br>
+
+<h2 style="padding: 14px 26px;"> Rewrites in chemlambda vs. rewrites in hapax </h2>
+
+The rewrites of chemlambda are explained in [1], [2]. With the mol notiation we can equally describe the rewrites from interaction combinators, or those from other small graph rewrite systems. <br> <br>
+
+First we explain the way we do rewrites in chemlambda v2 and interaction combinators. Then we explain how we do the chemlambda rewrites in hapax, because we do them in a different way. <br> <br>
+
+<h2 style="padding: 14px 26px;"> Rewrites in chemlambda v2 and in interaction combinators, in mol notation  </h2>
+
+With the mol notation, each rewrite consists in the following: <br>
+<ul style="padding: 14px 26px;">
+<li> the rewrite has a LEFT pattern and a RIGHT pattern, both are mol files</li>
+<li> the rewrite replaces the LEFT pattern with the RIGHT pattern</li>
+</ul>
+Here is a chemlambda rewrite ("A-L" or "beta" rewrite): <br>
+<br>
+LEFT = [["L", "a", "b", "c"], ["A", "c", "d", "e"]]  &nbsp; becomes  &nbsp; RIGHT = [["Arrow", "a", "e"], ["Arrow", "d", "b"]]  <br>
+ <br>
+And here is an interaction combinators rewrite, where we add the node types "Arrow", as in chemlambda (and we'll have to add the COMB rewrites as well, but this is for later): <br>
+ <br>
+LEFT = [["&gamma;", "a", "b", "c"], ["&gamma;", "d", "e", "c"]]  &nbsp; becomes  &nbsp; RIGHT = [["Arrow", "a", "e"], ["Arrow", "b", "d"]]  <br>
+ <br>
+
+In chemlambda and in interaction combinators the LEFT and RIGHT patterns, as mol files, have certain properties: 
+<ul style="padding: 14px 26px;">
+<li> in the LEFT and RIGHT mol files the edges names which appear only once are the same. That is because in graph terms the LEFT and RIGHT patterns represents sub-graphs and the edges which appear only once in the patterns are those which connect the patterns with the rest of the graph. </li>
+<li> the patterns are simple, made of two nodes and there is an active edge, in the examples given is the edge "c", which connects them. This simplifies very much the search for LEFT patterns in the graph.</li>
+</ul>
+
+There are some problems with this kind of rewrites: 
+<ul style="padding: 14px 26px;">
+<li> they are not conservative, in the sense that some nodes and edges are replaced with others, in a way which does not conserve the number of (typed) nodes, nor the edges (number or name)</li>
+<li> in the case of rewrites which increase the number of edges and nodes, we need a mechanism of invention of new edge names, so that there is no clash with the edge names already present elsewhere in the graph (or mol file)</li>
+</ul>
+
+These problems are significant, especially if we want to use small graph rewrite systems as artificial chemistries, after all, even in an open system, a chemical reaction (which implements a graph rewrite) is conservative. 
+
+<h2 style="padding: 14px 26px;"> Chemlambda rewrites in hapax  </h2>
+
+In hapax we see a rewrite as a pair of permutations of the edges sources and targets. This way, any rewrite is conservative. Let's exemplify with the "A-L" rewrite from chemlambda. <br><br>
+
+In hapax the LEFT and RIGHT patterns are mol files of connected graphs, with a specified edge name. See <a href="https://github.com/mbuliga/hapax/blob/master/hapax-mol.js" target="_blank">hapax-mol.js</a> for a list of paterns used in chemlambda, as done in hapax. <br><br>
+
+Any rewrite needs a pattern and a "token", and outputs a pattern. The tokens are small graphs (patterns). In hapax these are specified in <a href="https://github.com/mbuliga/hapax/blob/master/hapax-chem.js" target="_blank">hapax-chem.js</a>. For example the "A-L" rewrite, as done in hapax, is: <br>
+<br>
+{kind:"A-L", needs:"Arrow-Arrow", gives:["Arrow", "Arrow", "L-A"], pisource:[4,0,3,2,1], pitarget:[3,4,0,2,1]} <br>
+<br>
+which means: <br>
+<br>
+LEFT pattern "A-L" + token "Arrow-Arrow" becomes Pattern "Arrow" + Pattern "Arrow" + token "L-A" <br>
+by using the following permutations of sources and targets: pisource:[4,0,3,2,1], pitarget:[3,4,0,2,1] <br>
+<br>
+
+Let's explain the same in mol notation. Instead of the LEFT pattern from chemlambda v2, we have a pattern <br><br>
+{named:"A-L", <br>
+edge:"a", <br>
+mol:[["L", "c", "b", "a"], <br>
+    ["A", "a", "d", "e"]] <br>
+} <br>
+<br>
+and a token <br><br>
+{named:"Arrow-Arrow",<br>
+edge:"a",<br>
+mol:[["Arrow", "b", "a"],<br>
+    ["Arrow", "a", "b"]] <br>
+}<br>
+<br>
+which corresponds (i.e. recognizes the pattern in the graph) to the mol file: <br>
+<br>
+L c b a <br>
+A a d e <br>
+Arrow b' a'<br>
+Arrow a' b'<br>
+<br>
+Now, according to the type "in" or "out" of the ports, we see that we have 5 <span style="color: #ff0000;">sources, colored red</span>, and five <span style="color: #ffff00;">targets, colored yellow</span>: <br>
+<br>
+L <span style="color: #ffff00;">c</span> <span style="color: #ff0000;">b</span> <span style="color: #ff0000;">a</span> <br>
+A <span style="color: #ffff00;">a</span> <span style="color: #ffff00;">d</span> <span style="color: #ff0000;">e</span> <br>
+Arrow <span style="color: #ffff00;">b'</span> <span style="color: #ff0000;">a'</span><br>
+Arrow <span style="color: #ffff00;">a'</span> <span style="color: #ff0000;">b'</span><br>
+<br>
+This is transformed into another pattern, by permuting the sources and the targets. We get: <br>
+<br>
+L <span style="color: #ffff00;">b'</span> <span style="color: #ff0000;">a</span> <span style="color: #ff0000;">b'</span> <br>
+A <span style="color: #ffff00;">a'</span> <span style="color: #ffff00;">a</span> <span style="color: #ff0000;">a'</span> <br>
+Arrow <span style="color: #ffff00;">c</span> <span style="color: #ff0000;">e</span><br>
+Arrow <span style="color: #ffff00;">d</span> <span style="color: #ff0000;">b</span><br>
+<br>
+which is, as the rewrite claims, recognized as two patterns "Arrow"<br><br>
+{named:"Arrow",<br>
+edge:"a",<br>
+mol:[["Arrow", "a", "b"]]<br>
+}<br>
+<br>
+and a token "L-A"<br><br>
+{named:"L-A",<br>
+edge:"a",<br>
+mol:[["A", "c", "a", "c"],<br>
+    ["L", "b", "a", "b"]]<br>
+}<br>
+<br>
+The permutation of sources is described by the array pisources and the permutation of targets is described by the array pitarget. In order to understand how this is done, first recall that (in javascript in particular) arrays elements are numbered starting with 0, therefore the array pisource = [4,0,3,2,1], for example, represents a permutation in the sense that the element 0 goes to 4, 1 goes to 0, 2 goes to 3, etc.<br><br>
+
+Then, in order to apply the permutations pisource and pitarget correctly, we need to be sure in what order the pattern recognition function sees the sources and targets. The problem is that we could easily pick an order by hand of the sources and targets, but how does the program picks them? We need to know this only once, when we define the rewrites. For this we  apply the pattern recognition program to the patterns themselves. (At some point in the future this has to be automatized). The page [9] tells us exactly this, namely that for the pattern recognition program the order of the sources for this rewrite is: <br><br>
+<span style="color: #ff0000;">a</span>, <span style="color: #ff0000;">b</span>, <span style="color: #ff0000;">e</span>, <span style="color: #ff0000;">a'</span>, <span style="color: #ff0000;">b'</span> <br>
+<br>
+and the order of the targets for this rewrite is: 
+<br><br>
+<span style="color: #ffff00;">a</span>, <span style="color: #ffff00;">c</span>, <span style="color: #ffff00;">d</span>, <span style="color: #ffff00;">a'</span>, <span style="color: #ffff00;">b'</span> <br>
+<br>
+You can check by hand that pisource and pitarget permutation do indeed what they are expected to. For this see that, for example <span style="color: #ff0000;">a</span> which is source 0, appears in position 1 in pisource, therefore it will go in the place of source 1, which is <span style="color: #ff0000;">b</span>, and so on.<br> <br>
+
+The hapax way of doing rewrites is more general and more flexible than the usual way. It can be applied to interaction combinators easily (one needs a way to add the sources-targets supplimentary information, in a way which respects the original formalism), but more interestingly, it can be applied to a variety of other graph rewrite systems which appear in science or mathematics. Even more, it can be used for random systems of graph rewrites, which are in vast numbers. This justifies the "hapax" name, which means "only once". See first descriptions of this idea in [10], [11].
+
+<h2 style="padding: 14px 26px;"> References: </h2>
+
+[1] <a href="http://chorasimilarity.github.io/chemlambda-gui/dynamic/moves.html" target="_blank"> chemlambda moves </a> <br>
+[2] <a href="http://imar.ro/~mbuliga/chemlambda-v2.html" target="_blank"> chemlambda v2 page </a> <br>
+[3] <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.57.5761&rep=rep1&type=pdf" target="_blank"> Y. Lafont, Interaction Combinators </a> <br>
+[4] <a href="https://github.com/mbuliga/hapax" target="_blank"> hapax repository </a> <br>
+[5] <a href="http://imar.ro/~mbuliga/graph-rewrites.html" target="_blank">small graph rewrite systems</a> <br>
+[6] <a href="https://arxiv.org/abs/1811.04960" target="_blank">Molecular computers</a> <br>
+[7] <a href="https://github.com/mbuliga/hapax/blob/master/hapax-mol.js" target="_blank">hapax-mol.js</a> <br> 
+[8] <a href="https://github.com/mbuliga/hapax/blob/master/hapax-chem.js" target="_blank">hapax-chem.js</a> <br> 
+[9] <a href="http://imar.ro/~mbuliga/hapax-explore.html" target="_blank">hapax-explore.html</a> <br> 
+[10] <a href="http://imar.ro/~mbuliga/betarand.html" target="_blank">14400 alternatives to the beta rewrite</a> <br> 
+[11] <a href="https://chorasimilarity.wordpress.com/2019/06/18/what-is-the-purpose-of-the-project-hapax/" target="_blank">What is the purpose of the project hapax?</a> <br> <br> <br> 
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=5759559; 
+var sc_invisible=1; 
+var sc_security="b75cf132"; 
+</script>
+
+<script type="text/javascript"
+src="http://www.statcounter.com/counter/counter.js"></script><noscript><div
+class="statcounter"><a title="web stats"
+href="http://www.statcounter.com/" target="_blank"><img
+class="statcounter"
+src="http://c.statcounter.com/5759559/0/b75cf132/1/"
+alt="web stats" ></a></div></noscript>
+<!-- End of StatCounter Code -->
+</body>
+</html>
+
