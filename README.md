@@ -11,6 +11,8 @@ See https://chorasimilarity.wordpress.com/2019/06/18/what-is-the-purpose-of-the-
 
 Related to chemlambda: https://github.com/chorasimilarity/chemlambda-gui/blob/gh-pages/dynamic/README.md
 
+Chemlambda and hapax: https://mbuliga.github.io/hapax/chemlambda-and-hapax.html
+
 Some slides: http://imar.ro/~mbuliga/genchem.html
 
 14400 alternatives to the beta rewrite: http://imar.ro/~mbuliga/betarand.html 
