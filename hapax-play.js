@@ -504,7 +504,7 @@ for (k = 0; k < molabsReal.mol.length; k++) {
       break;
       
       case "FOE":
-      startOfMeaning += "(" + molabsReal.mol[k][2] + ") = CDR (" + molabsReal.mol[k][2] + ") , (" + molabsReal.mol[k][3] + ") = CAR (" +  molabsReal.mol[k][1] + ")";
+      startOfMeaning += "(" + molabsReal.mol[k][2] + ") = CDR (" + molabsReal.mol[k][1] + ") , (" + molabsReal.mol[k][3] + ") = CAR (" +  molabsReal.mol[k][1] + ")";
       break;
       
       case "FI":
