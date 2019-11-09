@@ -2,6 +2,137 @@
 
 
 var fromMolLibrary = [ 
+// source https://raw.githubusercontent.com/chorasimilarity/chemlambda-gui/gh-pages/dynamic/mol/2_2_A_FO_FI_L.mol
+{named:"A-FO-FI-L",
+edge:"1",
+mol:[["A", "1", "2", "con"],
+    ["FO", "in", "1", "2"],
+    ["FI", "11", "22", "in"],
+    ["L", "con", "11", "22"]]
+},
+// source https://raw.githubusercontent.com/chorasimilarity/chemlambda-gui/gh-pages/dynamic/mol/16_quine_A_L_FI_FO_duplicate.mol
+{named:"16_quine_A_L_FI_FO_duplicate",
+edge:"a1",
+mol:[["FO", "a1", "a2", "a3"],
+    ["L", "a4", "a5", "a7"],
+    ["FO", "a6", "a8", "a9"],
+    ["FOE", "a10", "a11", "a12"],
+    ["FI", "a7", "a20", "a10"],
+    ["FI", "a2", "a8", "a6"],
+    ["FOE", "a17", "a13", "a14"],
+    ["FI", "a33", "a9", "a16"],
+    ["A", "a11", "a13", "a21"],
+    ["A", "a12", "a14", "a4"],
+    ["FI", "a19", "a16", "a20"],
+    ["FI", "a5", "a22", "a17"],
+    ["FOE", "a21", "a18", "a23"],
+    ["FI", "a15", "a24", "a22"],
+    ["L", "a18", "a24", "a1"],
+    ["L", "a23", "a15", "a19"],
+    ["FI", "a3", "2", "1"],
+    ["FO", "1", "2", "a33"]]
+},
+
+// source https://raw.githubusercontent.com/chorasimilarity/chemlambda-gui/gh-pages/dynamic/mol/omegafo.mol
+{named:"omegafo",
+edge:"wa4",
+mol:[["FO", "wa4", "wa8", "wa9"],
+["FO", "wa6", "wa10", "a11"],
+["A", "wa2", "wa3", "wa1"],
+["A", "wa8", "wa9", "wa5"],
+["A", "wa10", "wa11", "wa7"],
+["L", "wa5", "wa4", "wa2"],
+["L", "wa7", "wa6", "wa3"],
+["FO", "wa1", "w1", "w2"],
+["FO", "w1", "w11", "w12"],
+["FO", "w2", "w21", "w22"],
+["FO", "w11", "w111", "w112"],
+["FO", "w12", "w121", "w122"],
+["FO", "w21", "w211", "w212"],
+["FO", "w22", "w221", "w222"],
+["FO", "a4", "a8", "a9"],
+["FO", "a6", "a10", "wa11"],
+["A", "a2", "a3", "a1"],
+["A", "a8", "a9", "a5"],
+["A", "a10", "a11", "a7"],
+["L", "a5", "a4", "a2"],
+["L", "a7", "a6", "a3"],
+["FO", "a1", "1", "2"],
+["FO", "1", "11", "12"],
+["FO", "2", "21", "22"],
+["FO", "11", "111", "112"],
+["FO", "12", "121", "122"],
+["FO", "21", "211", "212"],
+["FO", "22", "221", "222"]]
+},
+
+// source https://raw.githubusercontent.com/chorasimilarity/chemlambda-gui/gh-pages/dynamic/mol/dodecahedron_dupli.mol
+{named:"dodecahedron_dupli",
+edge:"a1",
+mol:[["FOE", "10x", "10xai", "10xbi"],
+["FI", "10xb", "10xa", "0x"],
+["FOE", "10xai", "10xaiai", "10xaibi"],
+["FI", "10xaib", "10xaia", "10xa"],
+["FOE", "10xaiai", "10xaiaa", "10xaiab"],
+["FI", "10xaiab", "10xaiaa", "10xaia"],
+["FOE", "10xaibi", "10xaiba", "10xaibb"],
+["FI", "10xaibb", "10xaiba", "10xaib"],
+["FOE", "10xbi", "10xbiai", "10xbibi"],
+["FI", "10xbib", "10xbia", "10xb"],
+["FOE", "10xbiai", "10xbiaa", "10xbiab"],
+["FI", "10xbiab", "10xbiaa", "10xbia"],
+["FOE", "10xbibi", "10xbiba", "10xbibb"],
+["FI", "10xbibb", "10xbiba", "10xbib"],
+["FOE", "10y", "10yai", "10ybi"],
+["FI", "10yb", "10ya", "0y"],
+["FOE", "10yai", "10yaiai", "10yaibi"],
+["FI", "10yaib", "10yaia", "10ya"],
+["FOE", "10yaiai", "10yaiaa", "10yaiab"],
+["FI", "10yaiab", "10yaiaa", "10yaia"],
+["FOE", "10yaibi", "10yaiba", "10yaibb"],
+["FI", "10yaibb", "10yaiba", "10yaib"],
+["FOE", "10ybi", "10ybiai", "10ybibi"],
+["FI", "10ybib", "10ybia", "10yb"],
+["FOE", "10ybiai", "10ybiaa", "10ybiab"],
+["FI", "10ybiab", "10ybiaa", "10ybia"],
+["FOE", "10ybibi", "10ybiba", "10ybibb"],
+["FI", "10ybibb", "10ybiba", "10ybib"],
+["FOE", "1ky", "1kyai", "1kybi"],
+["FI", "1kyb", "1kya", "1y"],
+["FOE", "1kybi", "1kybiai", "1kybibi"],
+["FI", "1kybib", "1kybia", "1kyb"],
+["FOE", "1kybiai", "1kybiaa", "1kybiab"],
+["FI", "1kybiab", "1kybiaa", "1kybia"],
+["FOE", "1kybibi", "1kybiba", "1kybibb"],
+["FI", "1kybibb", "1kybiba", "1kybib"],
+["FOE", "1kyai", "1kyaiai", "1kyaibi"],
+["FI", "1kyaib", "1kyaia", "1kya"],
+["FOE", "1kyaiai", "1kyaiaa", "1kyaiab"],
+["FI", "1kyaiab", "1kyaiaa", "1kyaia"],
+["FOE", "1kyaibi", "1kyaiba", "1kyaibb"],
+["FI", "1kyaibb", "1kyaiba", "1kyaib"],
+["A", "9x", "12ad", "10x"],
+["L", "9y", "12ad", "1ky"],
+["A", "8x", "22ad", "9x"],
+["L", "8y", "22ad", "10y"],
+["A", "7x", "12", "8x"],
+["L", "7y", "12", "9y"],
+["A", "6x", "22", "7x"],
+["L", "6y", "22", "8y"],
+["A", "5x", "32", "6x"],
+["L", "5y", "32", "7y"],
+["A", "4x", "42", "5x"],
+["L", "4y", "42", "6y"],
+["A", "3x", "12o", "4x"],
+["L", "3y", "12o", "5y"],
+["A", "2x", "22o", "3x"],
+["L", "2y", "22o", "4y"],
+["A", "1x", "32o", "2x"],
+["L", "1y", "32o", "3y"],
+["A", "0x", "42o", "1x"],
+["L", "0y", "42o", "2y"]]
+},
+
 {named:"ackermann_2_2", 
 edge:"1",
 mol:[["A", "1", "cb", "o"], 
@@ -46,7 +177,7 @@ mol:[["A", "1", "cb", "o"],
 },
 
 // source https://github.com/chorasimilarity/chemlambda-gui/blob/gh-pages/dynamic/mol/9_quine.mol 
-{named:"9quine",
+{named:"9_quine",
 edge:"1",
 mol:[["FOE", "1", "11", "10"], 
     ["FOE", "9", "17", "16"],
@@ -59,7 +190,19 @@ mol:[["FOE", "1", "11", "10"],
     ["L", "11", "13", "9"]]
 },
 
-// chemlambda tokens
+{named:"mol_to_try",
+edge:"1",
+mol:[["FO", "1", "free2", "free3"],
+["FO", "4", "5", "6"],
+["L", "7", "4", "1"],
+["A", "6", "5", "8"],
+["A", "9", "8", "7"],
+["L", "10", "11", "9"],
+["A", "12", "13", "10"],
+["FO", "11", "13", "12"]]
+},
+
+// chemlambda and chemlambda-var tokens
 
 {named:"ArrowClosed",
 edge:"a",
@@ -83,6 +226,12 @@ mol:[["A", "c", "a", "c"],
 edge:"a",
 mol:[["A", "c", "a", "c"],
     ["FOE", "b", "a", "b"]]
+},
+
+{named:"FO-A",
+edge:"a",
+mol:[["A", "c", "a", "c"],
+    ["FO", "b", "a", "b"]]
 },
 
 
@@ -123,7 +272,7 @@ mol:[["FI", "a", "cp", "ap"],
     ["FOE", "bp", "cp", "bp"]]
 },
 
-// chemlambda left patterns
+// chemlambda and chemlambda-var left patterns
 
 
 {named:"ArrowClosed2",
@@ -253,7 +402,7 @@ mol:[["Arrow", "b", "a"],
 
 
 
-// chemlambda right patterns
+// chemlambda and chemlambda-var right patterns
 
 {named:"A",
 edge:"a",
@@ -306,7 +455,13 @@ mol:[["A", "a", "bp", "d"],
     ["FOE", "c", "ap", "bp"]]
 },
 
-
+{named:"A-A-FO-FO",
+edge:"a",
+mol:[["A", "a", "bp", "d"],
+    ["FO", "b", "cp", "a"],
+    ["A", "cp", "ap", "e"],
+    ["FO", "c", "ap", "bp"]]
+},
 
 {named:"FI-FI-FO-FO",
 edge:"a",

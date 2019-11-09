@@ -70,14 +70,14 @@ switch (phy) {
     for (j=0; j < DIMENSION; j++) {
       for (l=0; l < state.node[k].ports.length; l++) {
         if (state.edge[state.node[k].ports[l]].s.node == k) {
-          phyState.node[k].p[j] += ELASTICA * (phyState.node[k].q[j] - phyState.node[state.edge[state.node[k].ports[l]].t.node].q[j]);
+          phyState.node[k].p[j] += ELASTICA * (phyState.node[state.edge[state.node[k].ports[l]].t.node].q[j] - phyState.node[k].q[j]);
         } else {
-          phyState.node[k].p[j] += ELASTICA * (phyState.node[k].q[j] - phyState.node[state.edge[state.node[k].ports[l]].s.node].q[j]);
+          phyState.node[k].p[j] += ELASTICA * (phyState.node[state.edge[state.node[k].ports[l]].s.node].q[j] - phyState.node[k].q[j]);
         }
     
       }
       phyState.node[k].p[j] += (Math.round(2*BOXSPEED * Math.random())) - BOXSPEED;
-      phyState.node[k].q[j] = Math.abs(((phyState.node[k].q[j] + phyState.node[k].p[j] + BOXSIZE) % (2 *BOXSIZE)) - BOXSIZE);
+      phyState.node[k].q[j] = Math.abs(Math.round(phyState.node[k].q[j] + phyState.node[k].p[j] +  BOXSIZE) % (2*BOXSIZE)) - BOXSIZE;
     }
     
   }
@@ -115,25 +115,25 @@ var k, output = 0;
 if (edge1 == edge2) {
   return output;
 } else {
-  var a = edgeNodes(edge1,state);
-  var as = phyState.node[a.sn].q;
-  var at = phyState.node[a.tn].q;
-  var b = edgeNodes(edge2,state);
-  var bs = phyState.node[b.sn].q;
-  var bt = phyState.node[b.tn].q;
+//  var a = edgeNodes(edge1,state);
+  var as = phyState.node[state.edge[edge1].s.node].q;
+  var at = phyState.node[state.edge[edge1].t.node].q;
+//  var b = edgeNodes(edge2,state);
+  var bs = phyState.node[state.edge[edge2].s.node].q;
+  var bt = phyState.node[state.edge[edge2].t.node].q;
   
-  var valmax = [0,0,0,0];
+  var crit = 0;
   
   for (k=0; k < DIMENSION; k++) {
     var med = (as[k] + at[k] + bs[k] + bt[k]) / 4;
-    valmax[0] += ((as[k] - med) * (as[k] - med));
-    valmax[1] += ((at[k] - med) * (at[k] - med));
-    valmax[2] += ((bs[k] - med) * (bs[k] - med));
-    valmax[3] += ((bt[k] - med) * (bt[k] - med));
+    crit += ((as[k] - med) * (as[k] - med));
+    crit += ((at[k] - med) * (at[k] - med));
+    crit += ((bs[k] - med) * (bs[k] - med));
+    crit += ((bt[k] - med) * (bt[k] - med));
   }
   
-  var paramm = (param * BOXSIZE) * (param * BOXSIZE);
-  var crit = Math.max(valmax[0], valmax[1], valmax[2], valmax[3]);
+  var paramm = (param * BOXSIZE) * (param * BOXSIZE) *16;
+
   
   if (crit <= paramm) {
     var output = 1;
