@@ -32,3 +32,7 @@ https://mbuliga.github.io/hapax/betarand.html
 
   a presentation of the general ideas, towards the end relevant to hapax
 
+
+- the folder chemlambda: https://github.com/mbuliga/hapax/tree/master/chemlambda
+
+  contains the essentials of chemlambda-v2, whihc is used as an example with hapax
