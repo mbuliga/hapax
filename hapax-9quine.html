@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>hapax-9quine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- 
+===============================================================================
+  EXTERNAL SCRIPTS
+===============================================================================
+
+
+<script src="d3.min.js" charset="utf-8"></script>
+<script src="jquery.min.js"></script>
+
+<script src="hapax-tokens.js" charset="utf-8"></script>
+
+-->
+
+<!-- 
+===============================================================================
+  CSS
+===============================================================================
+-->
+
+<link rel="stylesheet" type="text/css" href="css/hapax.css">
+
+</head>
+
+<!-- 
+===============================================================================
+  BODY
+===============================================================================
+-->
+
+<body style="background-color: #232323; color: #ffffff; overflow: scroll;">
+
+<!-- 
+===============================================================================
+  INTERNAL SCRIPTS (except of main script and input script)
+===============================================================================
+-->
+
+<script src="js/hapax-nodes.js" charset="utf-8"></script>
+<script src="js/hapax-chem.js" charset="utf-8"></script>
+<script src="js/hapax-phys.js" charset="utf-8"></script>
+<script src="js/hapax-aux.js" charset="utf-8"></script>
+<script src="js/hapax.js" charset="utf-8"></script>
+<script src="js/hapax-mol.js" charset="utf-8"></script>
+
+
+
+
+
+<!-- 
+===============================================================================
+  MAIN HTML
+===============================================================================
+-->
+
+<p style="position: absolute; top: 0; right: 0; border: 0;">
+ <a href="http://imar.ro/~mbuliga/" target="_blank">M. Buliga</a>, version: 15.06.2019 &nbsp; <a  rel="license" href="http://creativecommons.org/licenses/by/4.0/"
+><img alt="Creative Commons License" style="border-width:2" src="cc-by-4-0.png"/></a><br> 
+</p>
+
+<p><a href="https://github.com/chorasimilarity/chemlambda-gui/blob/gh-pages/dynamic/mol/9_quine.mol" target="_blank">9quine</a> computed with <a href="https://github.com/mbuliga/hapax" target="_blank">(hapax)</a>. See also the computation of <a href="hapax-ack.html" target="_blank">Ackermann(2,2)</a></p>
+
+<p>
+<button id="start">start</button> 
+<button id="stop">stop</button> &nbsp; &nbsp;
+
+<button id="my2nd" onclick="document.location.reload(true)">refresh</button>
+
+
+<div id="container">
+
+<div class="flex">
+  <div class="box30"><ul><li>reactions ingredients:</li></ul></div> 
+  <div class="box20"><ul><li>main molecule:</li></ul></div>  
+  <div class="box30"><ul><li>means:</li></ul></div> 
+  <div class="box20"><ul><li>tokens:</li></ul></div> 
+</div>
+
+
+<div class="flex">
+  <div class="box30" id="molabs"> </div> 
+  <div class="box20" id="molorig"> </div>
+  <div class="box30"  id="molrelback"></div>    
+  <div class="box20" id="seekind"></div>    
+</div>
+
+</div>
+
+<!-- 
+===============================================================================
+  MAIN SCRIPT
+===============================================================================
+-->
+
+<script src="js/hapax-play.js" charset="utf-8"></script> 
+
+<!-- document.getElementById("myBtn").disabled = true;
+-->
+<script>
+function myMove() {
+
+  var elem = document.getElementById("container");   
+  mockCycle();
+}
+var requestId;
+
+function loop() {
+    requestId = undefined;
+    
+  var elem = document.getElementById("container");   
+  mockCycle();
+  start();
+}
+
+function start() {
+    if (!requestId) {
+       requestId = window.requestAnimationFrame(loop);
+    }
+}
+
+function stop() {
+    if (requestId) {
+       window.cancelAnimationFrame(requestId);
+       requestId = undefined;
+    }
+}
+document.querySelector("#start").addEventListener('click', function() {
+  start();
+});
+
+document.querySelector("#stop").addEventListener('click', function() {
+  stop();
+});
+</script>
+
+
+<!-- 
+===============================================================================
+  FOOTER
+===============================================================================
+
+
+<br>
+
+<footer>
+
+
+
+</footer>
+
+-->
+
+</body>
+</html>
+
+
