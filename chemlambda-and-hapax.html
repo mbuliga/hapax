@@ -191,7 +191,7 @@ The "in" and "out" are with respect to the node: a target of an edge is an "in" 
 
 This supplimentary structure, which is not present in usual interaction combinators, forces us to modify the type of a node, namely, a node type specifies, as previously, the name of the type ("A", "L", "FI", etc.), the number of ports, but also the type "in" or "out" of each port. <br><br>
 
-For example, the nodes of type "A" and "FI" have 3 ports,  with the types ["in", "in", "out"]. The nodes "L", "FO", FOE" have 3 ports, with the types ["in", "out", "out"]. In the hapax repository this is specified in the <a href="https://github.com/mbuliga/hapax/blob/master/hapax-nodes.js" target="_blank">hapax-nodes.js</a>. <br> <br>
+For example, the nodes of type "A" and "FI" have 3 ports,  with the types ["in", "in", "out"]. The nodes "L", "FO", FOE" have 3 ports, with the types ["in", "out", "out"]. In the hapax repository this is specified in the <a href="https://github.com/mbuliga/hapax/blob/master/js/hapax-nodes.js" target="_blank">hapax-nodes.js</a>. <br> <br>
 
 In general, in hapax we shall strive to impose for 3-valent node types, the following: always the 1st port has type "in" and the 3rd port has type "out", while the middle port has either "in" or "out" type. <br><br>
 
@@ -272,9 +272,10 @@ These problems are significant, especially if we want to use small graph rewrite
 
 In hapax we see a rewrite as a pair of permutations of the edges sources and targets. This way, any rewrite is conservative. Let's exemplify with the "A-L" rewrite from chemlambda. <br><br>
 
-In hapax the LEFT and RIGHT patterns are mol files of connected graphs, with a specified edge name. See <a href="https://github.com/mbuliga/hapax/blob/master/hapax-mol.js" target="_blank">hapax-mol.js</a> for a list of paterns used in chemlambda, as done in hapax. <br><br>
+In hapax the LEFT and RIGHT patterns are mol files of connected graphs, with a specified edge name. See 
+<a href="https://github.com/mbuliga/hapax/blob/master/js/hapax-mol.js" target="_blank">hapax-mol.js</a> for a list of paterns used in chemlambda, as done in hapax. <br><br>
 
-Any rewrite needs a pattern and a "token", and outputs a pattern. The tokens are small graphs (patterns). In hapax these are specified in <a href="https://github.com/mbuliga/hapax/blob/master/hapax-chem.js" target="_blank">hapax-chem.js</a>. For example the "A-L" rewrite, as done in hapax, is: <br>
+Any rewrite needs a pattern and a "token", and outputs a pattern. The tokens are small graphs (patterns). In hapax these are specified in <a href="https://github.com/mbuliga/hapax/blob/master/js/hapax-chem.js" target="_blank">hapax-chem.js</a>. For example the "A-L" rewrite, as done in hapax, is: <br>
 <br>
 {kind:"A-L", needs:"Arrow-Arrow", gives:["Arrow", "Arrow", "L-A"], pisource:[4,0,3,2,1], pitarget:[3,4,0,2,1]} <br>
 <br>
@@ -355,11 +356,12 @@ The hapax way of doing rewrites is more general and more flexible than the usual
 [6] <a href="https://arxiv.org/abs/1811.04960" target="_blank">Molecular computers</a> <br>
 [7] <a href="https://github.com/mbuliga/hapax/blob/master/js/hapax-mol.js" target="_blank">hapax-mol.js</a> <br> 
 [8] <a href="https://github.com/mbuliga/hapax/blob/master/js/hapax-chem.js" target="_blank">hapax-chem.js</a> <br> 
-[9] <a href="http://imar.ro/~mbuliga/hapax-explore.html" target="_blank">hapax-explore.html</a> <br> 
-[10] <a href="http://imar.ro/~mbuliga/betarand.html" target="_blank">14400 alternatives to the beta rewrite</a> <br> 
+[9] <a href="https://mbuliga.github.io/hapax/hapax-explore.html" target="_blank">hapax-explore.html</a> <br> 
+[10] <a href="https://mbuliga.github.io/hapax/betarand.html" target="_blank">14400 alternatives to the beta rewrite</a> <br> 
 [11] <a href="https://chorasimilarity.wordpress.com/2019/06/18/what-is-the-purpose-of-the-project-hapax/" target="_blank">What is the purpose of the project hapax?</a> <br> <br> <br> 
 
 
 </body>
 </html>
+
 
