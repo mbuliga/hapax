@@ -11,22 +11,21 @@ Can we build custom, private computing systems, which are ἄπαξ χέων, wh
 We in a unitary way a large family of asynchronous graph rewriting automata, by encoding a graph rewrite as a permutation of the ends of the edges of a graph. A local rewrite, i.e. one which involves a small number of nodes and edges, is then encoded as a small permutation. 
 
 By varying the permutation we can vary the graph rewrite. As an example, there are 14400 variants of the iconic beta rewrite: 
- http://imar.ro/~mbuliga/betarand.html 
+https://mbuliga.github.io/hapax/betarand.html
  
  
  
  
 ## Relevant links
 
-The project was announced in the post: https://chorasimilarity.wordpress.com/2019/06/18/what-is-the-purpose-of-the-project-hapax/ 
+Chemlambda and hapax: https://mbuliga.github.io/hapax/chemlambda-and-hapax.html 
 
-Related to chemlambda: https://github.com/chorasimilarity/chemlambda-gui/blob/gh-pages/dynamic/README.md
+- explains the mol notation and the encoding of graph erwrites as permutations; discusses differences from chemlambda
 
-Chemlambda and hapax: https://mbuliga.github.io/hapax/chemlambda-and-hapax.html
+Ackermann(2,2) with hapax: https://mbuliga.github.io/hapax/hapax-ack.html
 
-Slides: http://imar.ro/~mbuliga/genchem.html
+9_quine with hapax: https://mbuliga.github.io/hapax/hapax-9quine.html
 
+slides: http://imar.ro/~mbuliga/genchem.html
 
-
-Small graph rewrite systems: http://imar.ro/~mbuliga/graph-rewrites.html
 
