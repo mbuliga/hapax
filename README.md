@@ -26,6 +26,9 @@ Ackermann(2,2) with hapax: https://mbuliga.github.io/hapax/hapax-ack.html
 
 9_quine with hapax: https://mbuliga.github.io/hapax/hapax-9quine.html
 
+- two pages which use the js library
+
 slides: http://imar.ro/~mbuliga/genchem.html
 
+- describe the general theory 
 
