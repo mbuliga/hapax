@@ -18,17 +18,17 @@ https://mbuliga.github.io/hapax/betarand.html
  
 ## Relevant links
 
-Chemlambda and hapax: https://mbuliga.github.io/hapax/chemlambda-and-hapax.html 
+- Chemlambda and hapax: https://mbuliga.github.io/hapax/chemlambda-and-hapax.html 
 
-- explains the mol notation and the encoding of graph erwrites as permutations; discusses differences from chemlambda
+ explains the mol notation and the encoding of graph erwrites as permutations; discusses differences from chemlambda
 
-Ackermann(2,2) with hapax: https://mbuliga.github.io/hapax/hapax-ack.html
+- Ackermann(2,2) with hapax: https://mbuliga.github.io/hapax/hapax-ack.html
 
-9_quine with hapax: https://mbuliga.github.io/hapax/hapax-9quine.html
+- 9_quine with hapax: https://mbuliga.github.io/hapax/hapax-9quine.html
 
-- two pages which use the js library
+  two pages which use the js library
 
-slides: http://imar.ro/~mbuliga/genchem.html
+- slides: http://imar.ro/~mbuliga/genchem.html
 
-- describe the general theory 
+  a presentation of the general ideas, towards the end relevant to hapax
 
