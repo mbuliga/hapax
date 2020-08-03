@@ -99,7 +99,9 @@ var ELASTICA = 0.01;
 
 // var mol = molfile();
 
-var molnamed = new Mol("9_quine");
+var docuMol = document.getElementById("molhere").innerHTML;
+
+var molnamed = new Mol(docuMol);
 var mol = molnamed.mol;
 
 /* a .mol is an usual mol file, i.e. an array of nodes, each 
