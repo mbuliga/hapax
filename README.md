@@ -1,10 +1,36 @@
-# Project hapax
+# Project hapax (aka "made of money")
 
 ## Questions:
 
-How many Turing universal graph rewrite systems are? 
+Can we build everything from  money (minted tokens)?  
 
-Can we build custom, private computing systems, which are ἄπαξ χέων, which means "poured only once"?
+Can we build private computing systems, which are ἄπαξ χέων, which means "poured only once"?
+
+
+## Main idea:
+
+As explained first in 
+
+Buliga, Marius (2018): Chemlambda strings. figshare. Journal contribution. https://doi.org/10.6084/m9.figshare.5751318.v1
+
+then in 
+
+M. Buliga, Artificial life properties of directed interaction combinators vs. chemlambda. 
+https://arxiv.org/abs/2005.06060
+
+it is possible to express a graph rewrite as a chemical reaction of the form 
+
+(LEFT PATTERN) + (TOKEN_1) + (ENZYME) = (RIGHT PATTERN) + (TOKEN_2) + (ENZYME)
+
+Here the tokens are small graphs from a pre-defined family. They are used to have a conservative chemical reaction. In the presence of tokens the graph rewrite appears as a permutation of the half-edges of the graph pattern. 
+
+We can see the tokens as a form of money bricks which are used for universal computation. Verbatim, each program is a graph "made of money" and the (decentralized) execution of the program is a process of money (tokens) exchanges. 
+
+As this is one of the chemlambda projects 
+
+https://chemlambda.github.io/index.html
+
+the relation with chemlambda comes from the problem of naming links in chemlambda graphs (molecules). Minted tokens are a solution for this problem. 
 
 ## Goal of hapax
 
