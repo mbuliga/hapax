@@ -24,6 +24,15 @@ it is possible to express a graph rewrite as a chemical reaction of the form
 
 Here the tokens are small graphs from a pre-defined family. They are used to have a conservative chemical reaction. In the presence of tokens the graph rewrite appears as a permutation of the half-edges of the graph pattern. 
 
+As an illustration see this hand made animation of the [9-quine](https://mbuliga.github.io/quinegraphs/ice.html#9_quine) 
+
+
+
+![9-quine](9-quine-string-anim.gif)
+
+
+
+
 We can see the tokens as a form of money bricks which are used for universal computation. Verbatim, each program is a graph "made of money" and the (decentralized) execution of the program is a process of money (tokens) exchanges. 
 
 As this is one of the chemlambda projects 
